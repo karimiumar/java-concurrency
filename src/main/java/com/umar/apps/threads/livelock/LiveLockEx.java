@@ -1,4 +1,4 @@
-package com.umar.apps.livelock;
+package com.umar.apps.threads.livelock;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;

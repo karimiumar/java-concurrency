@@ -1,4 +1,4 @@
-package com.umar.apps.deadlock;
+package com.umar.apps.threads.deadlock;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
