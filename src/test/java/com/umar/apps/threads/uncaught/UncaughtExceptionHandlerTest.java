@@ -1,13 +1,6 @@
 package com.umar.apps.threads.uncaught;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class UncaughtExceptionHandlerTest {
 
