@@ -11,7 +11,7 @@ public class SynchronizedHashMapWithRWLockTest {
 
     @Test
     void whenWriting_thenNoReading() {
-        SynchronizedHashMapWithRWLock object = new SynchronizedHashMapWithRWLock();
+        SynchronizedHashMapWithRWLock<String, String> object = new SynchronizedHashMapWithRWLock<>();
         final int threadCount = 3;
         final ExecutorService service = Executors.newFixedThreadPool(threadCount);
         executeWriterThreads(object, threadCount, service);
@@ -21,7 +21,7 @@ public class SynchronizedHashMapWithRWLockTest {
 
     @Test
     void whenReading_thenMultipleReadingThreadsAllowed() {
-        SynchronizedHashMapWithRWLock object = new SynchronizedHashMapWithRWLock();
+        SynchronizedHashMapWithRWLock<String, String> object = new SynchronizedHashMapWithRWLock<>();
         final int threadCount = 5;
         final ExecutorService service = Executors.newFixedThreadPool(threadCount);
         executeReaderThreads(object, threadCount, service);
@@ -29,7 +29,7 @@ public class SynchronizedHashMapWithRWLockTest {
         service.shutdown();
     }
 
-    private void executeWriterThreads(SynchronizedHashMapWithRWLock object, int threadCount, ExecutorService service) {
+    private void executeWriterThreads(SynchronizedHashMapWithRWLock<String, String> object, int threadCount, ExecutorService service) {
         for (int i = 0; i < threadCount; i++) {
             service.execute(() -> {
                 object.put("key" + threadCount, "value" + threadCount);
@@ -37,7 +37,7 @@ public class SynchronizedHashMapWithRWLockTest {
         }
     }
 
-    private void executeReaderThreads(SynchronizedHashMapWithRWLock object, int threadCount, ExecutorService service) {
+    private void executeReaderThreads(SynchronizedHashMapWithRWLock<String, String> object, int threadCount, ExecutorService service) {
         for (int i = 0; i < threadCount; i++) {
             service.execute(() -> object.get("key" + threadCount));
         }

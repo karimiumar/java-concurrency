@@ -13,9 +13,9 @@ import java.util.logging.Logger;
 
 import static java.lang.Thread.sleep;
 
-public class SynchronizedHashMapWithRWLock {
+public class SynchronizedHashMapWithRWLock<K,V> {
 
-    private static Map<String, String> syncHashMap = new HashMap<>();
+    private final Map<K, V> syncHashMap = new HashMap<>();
 
     private static final Logger LOGGER = Logger.getAnonymousLogger();
 
@@ -23,7 +23,7 @@ public class SynchronizedHashMapWithRWLock {
     private final Lock readLock = lock.readLock();
     private final Lock writeLock = lock.writeLock();
 
-    public void put(String key, String value) {
+    public void put(K key, V value) {
         try{
             writeLock.lock();
             LOGGER.info(String.format("%s writing.", Thread.currentThread().getName()));
@@ -36,7 +36,7 @@ public class SynchronizedHashMapWithRWLock {
         }
     }
 
-    public String get(String key) {
+    public V get(String key) {
         try {
             readLock.lock();
             LOGGER.info(String.format("%s reading.", Thread.currentThread().getName()));
@@ -46,7 +46,7 @@ public class SynchronizedHashMapWithRWLock {
         }
     }
 
-    public String remove(String key) {
+    public V remove(String key) {
         try {
             writeLock.lock();
             LOGGER.info(String.format("%s removing", Thread.currentThread().getName()));
@@ -57,7 +57,7 @@ public class SynchronizedHashMapWithRWLock {
     }
 
 
-    public boolean containsKey(String key) {
+    public boolean containsKey(V key) {
         try{
             readLock.lock();
             return syncHashMap.containsKey(key);
@@ -72,9 +72,9 @@ public class SynchronizedHashMapWithRWLock {
 
     private static class Reader implements Runnable {
 
-        SynchronizedHashMapWithRWLock object;
+        SynchronizedHashMapWithRWLock<String, String> object;
 
-        Reader(SynchronizedHashMapWithRWLock object) {
+        Reader(SynchronizedHashMapWithRWLock<String, String> object) {
             Objects.requireNonNull(object);
             this.object = object;
         }
@@ -88,9 +88,9 @@ public class SynchronizedHashMapWithRWLock {
 
     private static class Writer implements Runnable {
 
-        SynchronizedHashMapWithRWLock object;
+        SynchronizedHashMapWithRWLock<String, String> object;
 
-        Writer(SynchronizedHashMapWithRWLock object) {
+        Writer(SynchronizedHashMapWithRWLock<String, String> object) {
             this.object = object;
         }
 
@@ -109,7 +109,7 @@ public class SynchronizedHashMapWithRWLock {
     public static void main(String[] args) {
         final int threadCount = 3;
         final ExecutorService service = Executors.newFixedThreadPool(threadCount);
-        SynchronizedHashMapWithRWLock object = new SynchronizedHashMapWithRWLock();
+        SynchronizedHashMapWithRWLock<String, String> object = new SynchronizedHashMapWithRWLock<>();
 
         service.execute(new Thread(new Writer(object), "Writer"));
         service.execute(new Thread(new Reader(object), "Reader1"));
