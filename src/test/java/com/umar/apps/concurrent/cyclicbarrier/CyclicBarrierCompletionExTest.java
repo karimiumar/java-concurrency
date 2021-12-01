@@ -13,7 +13,7 @@ public class CyclicBarrierCompletionExTest {
         //So when
         //threadCount : 0 - 6, AtomicInteger updateCount inside CyclicBarrierCompletionEx is 0
         //threadCount : 7 - 13, AtomicInteger updateCount inside CyclicBarrierCompletionEx is 1
-        //threadCount : 14 - 20, AtomicInteger updateCount inside CyclicBarrierCompletionEx is 1
+        //threadCount : 14 - 20, AtomicInteger updateCount inside CyclicBarrierCompletionEx is 2
         var ex = CyclicBarrierCompletionEx.of(7, 20);
         assertThat(ex.countTrips()).isEqualTo(2);
     }
