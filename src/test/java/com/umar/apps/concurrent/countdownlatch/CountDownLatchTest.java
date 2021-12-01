@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,8 +24,7 @@ public class CountDownLatchTest {
     void whenParallelProcessing_thenMainThreadWillBlockUntilCompletion() throws InterruptedException {
         CountDownLatch countDownLatch = new CountDownLatch(5);
         var workers = Stream.generate(() -> new Thread(new Worker(outputScraper, countDownLatch)))
-                .limit(5)
-                .collect(Collectors.toList());
+                .limit(5).toList();
         //When
         workers.forEach(Thread::start);
         countDownLatch.await();//Block until workers finish
@@ -38,8 +36,7 @@ public class CountDownLatchTest {
     void whenFailingToProcessParallely_thenMainThreadShouldTimeout() throws InterruptedException {
         CountDownLatch countDownLatch = new CountDownLatch(5);
         var workers = Stream.generate(() -> new Thread(new BrokenWorker(outputScraper, countDownLatch)))
-                .limit(5)
-                .collect(Collectors.toList());
+                .limit(5).toList();
 
         //When..
         workers.forEach(Thread::start);
@@ -57,7 +54,7 @@ public class CountDownLatchTest {
         CountDownLatch completedThreadCounter = new CountDownLatch(5);
         var workers = Stream.generate(() -> new Thread(
                 new WaitingWorker(outputScraper, readyThreadCounter, callingThreadBlocker, completedThreadCounter)
-        )).limit(5).collect(Collectors.toList());
+        )).limit(5).toList();
 
         //When
         workers.forEach(Thread::start);
