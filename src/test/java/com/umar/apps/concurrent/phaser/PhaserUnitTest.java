@@ -32,6 +32,6 @@ public class PhaserUnitTest {
         ph.arriveAndAwaitAdvance();
         assertThat(ph.getPhase()).isEqualTo(2);
 
-        //ph.arriveAndDeregister();
+        ph.arriveAndDeregister();
     }
 }
