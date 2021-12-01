@@ -7,11 +7,11 @@ The barrier is called 'cyclic' because it can be re-used after the waiting threa
 ## Usage
 
 1. The constructor `public CyclicBarrier(int parties)` of CyclicBarrier takes an integer argument denoting number of threads that would call the `await()`  method on the barrier. The threads are called parties to the `CyclicBarrier`. This call is synchronous and the thread calling this method suspends execution till a specified number of threads have reached the same method in the barrier. This situation where a specified number of threads have called `await()` is called **tripping the barrier**.
-2. The other constructor `public CyclicBarrier(int parties, Runnable barrierAction` allows us to pass a logic that would be run by the last thread that **trips the barrier**
+2. The other constructor `public CyclicBarrier(int parties, Runnable barrierAction` allows us to pass a logic that would be run by the cyclic barrier thread that calls `await()` and **trips the barrier**
 
 ## Example
 
-In the example given below, `CyclicBarrierCompletionEx.of(Interger parties, int threadCount)`initializes an `AtomicInteger updateCount`.  This `updateCount` variable is incremented by the last thread that **trips the barrier** in the `int countTrips()` method.  
+In the example given below, `CyclicBarrierCompletionEx.of(Interger parties, int threadCount)`initializes an `AtomicInteger updateCount`.  This `updateCount` variable is incremented by the cyclicBarrier thread that calls `await()` and **trips the barrier** in the `int countTrips()` method.  
 ```java
 public record CyclicBarrierCompletionEx(Integer parties, Integer threadCount, AtomicInteger updateCount) {
 
