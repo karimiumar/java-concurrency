@@ -1,20 +1,17 @@
 ## Thread
-
 In Java, `java.lang.Thread` class is used to represent an application or JVM thread. Code is always being executed in the context of some `Thread` class.
 
 ### Thread Communication
-
 The most obvious way to communicate between threads is for one thread to to directly call a method on another `Thread` object.
 
 ### Thread coordination methods:
-
-|Thread Method  | Description                          |
-|---------------|--------------------------------------|
-|`start()`      | Start a `Thread` instance and execute its `run()` method.|
-|`join()`       | Block until one thread exits.|
-|`interrupt()`  | Interrupt the other thread. Of the thread is blocked in a method that responds to interrupts, an `InterruptedException` will be thrown in the other thread, otherwise the interrupt status is set. |
-|`stop()`,`suspend()`,`resume()`, `destroy()`| These methods are all deprecated and should not be used. Instead use `interrupt()` or a `volatile` flag to indicate to a thread what it should do.|
-|`wait()`/`notify()`| The wait/notify idiom is appropriate whenever one thread needs to signal to another that a condition has been met.
+| Thread Method                                | Description                                                                                                                                                                                        |
+|----------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `start()`                                    | Start a `Thread` instance and execute its `run()` method.                                                                                                                                          |
+| `join()`                                     | Block until one thread exits.                                                                                                                                                                      |
+| `interrupt()`                                | Interrupt the other thread. Of the thread is blocked in a method that responds to interrupts, an `InterruptedException` will be thrown in the other thread, otherwise the interrupt status is set. |
+| `stop()`,`suspend()`,`resume()`, `destroy()` | These methods are all deprecated and should not be used. Instead use `interrupt()` or a `volatile` flag to indicate to a thread what it should do.                                                 |
+| `wait()`/`notify()`                          | The wait/notify idiom is appropriate whenever one thread needs to signal to another that a condition has been met.                                                                                 |
 
 ### Uncaught Exception handlers
 
@@ -35,7 +32,6 @@ Starvation occurs when threads hold a lock for long periods such that some other
 3. Always ensure that you satisfy the waiting condition before calling `notify()` or `notifyAll()`.
 
 ### Java Concurrency - Synchronizers
-
 The `java.util.concurrent` package introduced in Jdk 5 contains several classes that help manage a set of threads that collaborate with each other. Some of these include:
 
 * [CyclicBarrier](CyclicBarrier.md)
@@ -45,7 +41,6 @@ The `java.util.concurrent` package introduced in Jdk 5 contains several classes 
 * [Semaphore](Semaphore.md)
 
 ### Threads Priority
-
 In Java, a thread's priority is an integer in the range of 0-10. The larger the integer the higher the priority.
 The thread scheduler uses this integer from each thread to determine which one should be allowed to execute. The `Thread` class defines three type of priorities:
 1. Minimum Priority `MIN_PRIORITY = 1`
@@ -53,7 +48,6 @@ The thread scheduler uses this integer from each thread to determine which one s
 3. Maximum Priority `MAX_PRIORITY = 10`
 
 ### Thread Execution
-
 The JVM supports a thread scheduling algorithm called fixed-priority pre-emptive scheduling. JVM serves the highest priority threads first.
 In case two threads have same priority, the JVM will execute them in FIFO order.
 
@@ -68,7 +62,6 @@ Use the `setPriority(int priority)` method to change the default priority of a t
 Use the `int getPriority()` method to find the priority of a thread.
 
 ### How to Get the number of Threads in a Java process
-
 1. Use a Grahical monitoring JVM tools like Java VisualVM
 2. Use `Thread.activeCount()` method to know about the active threads running by an application. It uses `ThreadGroup` so the number of active threads returned are less than the one visible in Java VisualVM
 3. To find the group use `Thread.currentThread().getThreadGroup().getName()`
