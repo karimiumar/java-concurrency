@@ -5,13 +5,13 @@ In Java, `java.lang.Thread` class is used to represent an application or JVM thr
 The most obvious way to communicate between threads is for one thread to to directly call a method on another `Thread` object.
 
 ### Thread coordination methods:
-| Thread Method                                | Description                                                                                                                                                                                        |
-|----------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `start()`                                    | Start a `Thread` instance and execute its `run()` method.                                                                                                                                          |
-| `join()`                                     | Block until one thread exits.                                                                                                                                                                      |
-| `interrupt()`                                | Interrupt the other thread. Of the thread is blocked in a method that responds to interrupts, an `InterruptedException` will be thrown in the other thread, otherwise the interrupt status is set. |
-| `stop()`,`suspend()`,`resume()`, `destroy()` | These methods are all deprecated and should not be used. Instead use `interrupt()` or a `volatile` flag to indicate to a thread what it should do.                                                 |
-| `wait()`/`notify()`                          | The wait/notify idiom is appropriate whenever one thread needs to signal to another that a condition has been met.                                                                                 |
+| Thread Method                                | Description                                                                                                                                                                                             |
+|----------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `start()`                                    | Start a `Thread` instance and execute its `run()` method.                                                                                                                                               |
+| `join()`                                     | Block until one thread exits.                                                                                                                                                                           |
+| `interrupt()`                                | Interrupt the other thread. One of the thread is blocked in a method that responds to interrupts, an `InterruptedException` will be thrown in the other thread, otherwise the interrupt status is set. |
+| `stop()`,`suspend()`,`resume()`, `destroy()` | These methods are all deprecated and should not be used. Instead use `interrupt()` or a `volatile` flag to indicate to a thread what it should do.                                                      |
+| `wait()`/`notify()`                          | The wait/notify idiom is appropriate whenever one thread needs to signal to another that a condition has been met.                                                                                      |
 
 ### Uncaught Exception handlers
 
@@ -27,7 +27,7 @@ Livelock occurs when threads spend all of their time negotiating access to a res
 Starvation occurs when threads hold a lock for long periods such that some other threads "starve" without making progress.
 
 ### Important points
-1. Always call `wait()`, `notify()` and `notifyAll()` inside a `synchronized` lock or an `IllegalMonitorStateException` will be thrown.
+1. Always call `wait()`, `notify()` and `notifyAll()` inside a `synchronized` block or an `IllegalMonitorStateException` will be thrown.
 2. Always `wait()` inside a loop that checks the condition being waited on.
 3. Always ensure that you satisfy the waiting condition before calling `notify()` or `notifyAll()`.
 
@@ -62,7 +62,7 @@ Use the `setPriority(int priority)` method to change the default priority of a t
 Use the `int getPriority()` method to find the priority of a thread.
 
 ### How to Get the number of Threads in a Java process
-1. Use a Grahical monitoring JVM tools like Java VisualVM
+1. Use a Graphical monitoring JVM tools like Java VisualVM
 2. Use `Thread.activeCount()` method to know about the active threads running by an application. It uses `ThreadGroup` so the number of active threads returned are less than the one visible in Java VisualVM
 3. To find the group use `Thread.currentThread().getThreadGroup().getName()`
 4. Use `top -H -p l` command to display threads in Java process (-H to display Java threads) on Linux
