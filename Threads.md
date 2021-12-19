@@ -35,8 +35,8 @@ Starvation occurs when threads hold a lock for long periods such that some other
 The `java.util.concurrent` package introduced in Jdk 5 contains several classes that help manage a set of threads that collaborate with each other. Some of these include:
 
 * [CyclicBarrier](CyclicBarrier.md)
-* [Phaser](Phaser.md)
 * [CountDownLatch](CountDownLatch.md)
+* [Phaser](Phaser.md)
 * [Exchanger](Exchanger.md)
 * [Semaphore](Semaphore.md)
 
